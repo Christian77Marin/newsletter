@@ -1,1 +1,16 @@
-
+spring:
+  application:
+    name: newsletter
+  datasource:
+    url: jdbc:postgresql://localhost:5432/newsletter
+    username: user
+    password: user
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+      transaction:
+        jta:
+          platform: enable
+    show-sql: true
