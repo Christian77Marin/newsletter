@@ -1,5 +1,18 @@
 package com.cmrdev.newsletter.service;
 
+import static org.antlr.v4.runtime.misc.Utils.readFile;
+
+import com.cmrdev.newsletter.dto.SendEmailRequest;
+import com.cmrdev.newsletter.model.User;
+import com.cmrdev.newsletter.repository.UserRepository;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.AddressException;
+import jakarta.mail.internet.InternetAddress;
+import jakarta.mail.internet.MimeMessage;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -10,12 +23,28 @@ import org.springframework.stereotype.Service;
 public class EmailService {
 
   private final JavaMailSender mailSender;
+  private final UserRepository userRepository;
 
-  public void sendEmail(String to, String subject, String body) {
-    SimpleMailMessage message = new SimpleMailMessage();
-    message.setTo(to);
-    message.setSubject(subject);
-    message.setText(body);
+  public void sendEmail(SendEmailRequest sendEmailRequest, String userId)
+      throws MessagingException, IOException {
+    MimeMessage message = mailSender.createMimeMessage();
+
+    User user = userRepository.findById(userId).orElseThrow();
+
+    message.setRecipients(MimeMessage.RecipientType.TO, user.getEmail());
+    message.setSubject(sendEmailRequest.getSubject());
+
+    String htmlTemplate = Files.readString(Paths.get("src/main/resources/EmailTemplate.html"));
+
+
+    String fullName = user.getName() + (user.getSurname().isEmpty() ? "" : " " + user.getSurname());
+
+    htmlTemplate = htmlTemplate.replace("${name}", fullName);
+    htmlTemplate = htmlTemplate.replace("${body}", sendEmailRequest.getBodyContent());
+    htmlTemplate = htmlTemplate.replace("${subject}", sendEmailRequest.getSubject());
+
+
+    message.setContent(htmlTemplate, "text/html; charset=utf-8");
 
     mailSender.send(message);
   }
