@@ -12,9 +12,9 @@ spring:
   application:
     name: newsletter
   datasource:
-    url: jdbc:postgresql://localhost:5432/newsletter
-    username: user
-    password: user
+    url: ${URL_JDBC}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
     driver-class-name: org.postgresql.Driver
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
