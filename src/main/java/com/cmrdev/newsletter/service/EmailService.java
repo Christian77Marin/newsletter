@@ -29,6 +29,8 @@ public class EmailService {
     message.setSubject(sendEmailRequest.getSubject());
 
     String htmlTemplate = Files.readString(Paths.get("src/main/resources/templates/EmailTemplate.html"));
+    String cssTemplate = Files.readString(Paths.get("src/main/resources/templates/styles/styles.css"));
+
 
 
     String fullName = user.getName() + (user.getSurname().isEmpty() ? "" : " " + user.getSurname());
@@ -36,6 +38,7 @@ public class EmailService {
     htmlTemplate = htmlTemplate.replace("${name}", fullName);
     htmlTemplate = htmlTemplate.replace("${body}", sendEmailRequest.getBodyContent());
     htmlTemplate = htmlTemplate.replace("${subject}", sendEmailRequest.getSubject());
+    htmlTemplate = htmlTemplate.replace("${styles}", cssTemplate);
 
 
     message.setContent(htmlTemplate, "text/html; charset=utf-8");

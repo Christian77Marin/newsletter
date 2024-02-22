@@ -1,19 +1,25 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Plantilla de correo electrónico</title>
-</head>
-<body>
-<h1 style="color: black;">Asunto: ${subject}</h1>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:100" rel="stylesheet">
+    <style type="text/css">${styles}</style>
+    <title>Plantilla de correo electrónico</title>
+  </head>
+  <body>
+    <header></header>
+    <h1>${subject}</h1>
 
-<p style="font-size: 20px;">Hola ${name},</p>
+    <p>Hola ${name},</p>
 
-<p>${body}</p>
+    <div class="content">
+      ${body}
+    </div>
 
-<p>Atentamente,</p>
+    <p>Atentamente,</p>
 
-<p>[Nombre de la empresa]</p>
-</body>
+    <p>[Nombre de la empresa]</p>
+    <footer></footer>
+  </body>
 </html>
