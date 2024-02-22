@@ -1,8 +1,8 @@
 package com.cmrdev.newsletter.service;
 
+import com.cmrdev.newsletter.exception.ValidationException;
 import com.cmrdev.newsletter.model.User;
 import com.cmrdev.newsletter.repository.UserRepository;
-import java.math.BigInteger;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -28,6 +28,36 @@ public class NewsletterService {
     user.setUserId(generateUniqueId(user.getEmail()));
     userRepository.save(user);
     return ResponseEntity.status(HttpStatus.CREATED).body("Successfully Created");
+  }
+
+  public User unsubscribeUser(String email){
+    Optional<User> optionalUser = Optional.ofNullable(userRepository.findByEmail(email));
+
+    if (optionalUser.isEmpty()) {
+      throw new ValidationException("The email dont exists");
+    } else if (!optionalUser.get().isSubscribed()) {
+      throw new ValidationException("The email is already unsubscribed");
+    }
+    User user = optionalUser.get();
+    user.setSubscribed(false);
+
+    userRepository.save(user);
+    return user;
+  }
+
+  public User subscribeUser(String email){
+    Optional<User> optionalUser = Optional.ofNullable(userRepository.findByEmail(email));
+
+    if (optionalUser.isEmpty()) {
+      throw new ValidationException("The email dont exists");
+    } else if (optionalUser.get().isSubscribed()) {
+      throw new ValidationException("The email is already subscribed");
+    }
+    User user = optionalUser.get();
+    user.setSubscribed(true);
+
+    userRepository.save(user);
+    return user;
   }
 
   public static String generateUniqueId(String email) {

@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,6 +31,16 @@ public class NewsletterController {
   @PostMapping(path = "/user")
   private ResponseEntity<String> createUser(@RequestBody User user){
     return service.createUser(user);
+  }
+
+  @PutMapping(path = "/unsubscribe/{userEmail}")
+  private User unsubscribeUser(@PathVariable String userEmail){
+    return service.unsubscribeUser(userEmail);
+  }
+
+  @PutMapping(path = "/subscribe/{userEmail}")
+  private User subscribeUser(@PathVariable String userEmail){
+    return service.subscribeUser(userEmail);
   }
 
   @PostMapping(path = "/sendEmail/{userId}")

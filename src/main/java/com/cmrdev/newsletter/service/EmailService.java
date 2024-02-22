@@ -1,20 +1,14 @@
 package com.cmrdev.newsletter.service;
 
-import static org.antlr.v4.runtime.misc.Utils.readFile;
-
 import com.cmrdev.newsletter.dto.SendEmailRequest;
 import com.cmrdev.newsletter.model.User;
 import com.cmrdev.newsletter.repository.UserRepository;
 import jakarta.mail.MessagingException;
-import jakarta.mail.internet.AddressException;
-import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
