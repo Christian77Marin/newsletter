@@ -28,7 +28,7 @@ public class EmailService {
     message.setRecipients(MimeMessage.RecipientType.TO, user.getEmail());
     message.setSubject(sendEmailRequest.getSubject());
 
-    String htmlTemplate = Files.readString(Paths.get("src/main/resources/EmailTemplate.html"));
+    String htmlTemplate = Files.readString(Paths.get("src/main/resources/templates/EmailTemplate.html"));
 
 
     String fullName = user.getName() + (user.getSurname().isEmpty() ? "" : " " + user.getSurname());
