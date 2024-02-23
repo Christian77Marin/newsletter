@@ -18,4 +18,6 @@ public class User {
   private String name;
   private String surname;
   private boolean subscribed;
+  @Column(name = "phone_number")
+  private Long phoneNumber;
 }
