@@ -3,11 +3,14 @@ package com.cmrdev.newsletter.service;
 import com.cmrdev.newsletter.dto.SendEmailRequest;
 import com.cmrdev.newsletter.model.User;
 import com.cmrdev.newsletter.repository.UserRepository;
+import io.micrometer.common.util.StringUtils;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -18,6 +21,8 @@ public class EmailService {
 
   private final JavaMailSender mailSender;
   private final UserRepository userRepository;
+
+  private static final String SPACE = " ";
 
   public void sendEmail(SendEmailRequest sendEmailRequest, String userId)
       throws MessagingException, IOException {
@@ -32,8 +37,10 @@ public class EmailService {
     String cssTemplate = Files.readString(Paths.get("src/main/resources/templates/styles/styles.css"));
 
 
-
-    String fullName = user.getName() + (user.getSurname().isEmpty() ? "" : " " + user.getSurname());
+    String fullName = Stream.of(user.getName(), user.getSurname())
+        .filter(StringUtils::isNotEmpty)
+        .map(String::trim)
+        .collect(Collectors.joining(SPACE));
 
     htmlTemplate = htmlTemplate.replace("${name}", fullName);
     htmlTemplate = htmlTemplate.replace("${body}", sendEmailRequest.getBodyContent());
