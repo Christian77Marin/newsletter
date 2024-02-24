@@ -34,7 +34,7 @@ public class NewsletterService {
     Optional<User> optionalUser = Optional.ofNullable(userRepository.findByEmail(email));
 
     if (optionalUser.isEmpty()) {
-      throw new ValidationException("The email dont exists");
+      throw new ValidationException("The email doesn't exists");
     } else if (!optionalUser.get().isSubscribed()) {
       throw new ValidationException("The email is already unsubscribed");
     }

@@ -8,8 +8,10 @@ import jakarta.mail.MessagingException;
 import java.io.IOException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -48,5 +50,20 @@ public class NewsletterController {
       throws MessagingException, IOException {
     emailService.sendEmail(sendEmailRequest, userId);
   }
+
+  @PostMapping(path = "/form-contact")
+  private ResponseEntity<Void> sendFormEmailToOwner(@RequestBody SendEmailRequest sendEmailRequest, @PathVariable String userId){
+    //emailService.sendEmail(sendEmailRequest, userId);
+
+    return ResponseEntity.ok().build();
+  }
+
+  @PatchMapping(path = "/form-contact")
+  private ResponseEntity<User> updateUser(@RequestBody SendEmailRequest sendEmailRequest, @PathVariable String userId){
+    //emailService.sendEmail(sendEmailRequest, userId);
+
+    return ResponseEntity.ok().build();
+  }
+
 
 }
