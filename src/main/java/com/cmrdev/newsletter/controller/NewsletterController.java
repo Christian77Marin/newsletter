@@ -1,6 +1,7 @@
 package com.cmrdev.newsletter.controller;
 
 import com.cmrdev.newsletter.dto.SendEmailRequest;
+import com.cmrdev.newsletter.dto.SendEmailToOwnerRequest;
 import com.cmrdev.newsletter.model.User;
 import com.cmrdev.newsletter.service.EmailService;
 import com.cmrdev.newsletter.service.NewsletterService;
@@ -52,10 +53,9 @@ public class NewsletterController {
   }
 
   @PostMapping(path = "/form-contact")
-  private ResponseEntity<Void> sendFormEmailToOwner(@RequestBody SendEmailRequest sendEmailRequest, @PathVariable String userId){
-    //emailService.sendEmail(sendEmailRequest, userId);
-
-    return ResponseEntity.ok().build();
+  private ResponseEntity<Void> sendFormEmailToOwner(@RequestBody SendEmailToOwnerRequest request)
+      throws MessagingException, IOException {
+    return emailService.sendEmailToOwner(request);
   }
 
   @PatchMapping(path = "/user")

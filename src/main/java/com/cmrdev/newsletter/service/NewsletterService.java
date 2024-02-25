@@ -1,5 +1,7 @@
 package com.cmrdev.newsletter.service;
 
+import static com.cmrdev.newsletter.utils.Utils.generateUniqueId;
+
 import com.cmrdev.newsletter.exception.ValidationException;
 import com.cmrdev.newsletter.model.User;
 import com.cmrdev.newsletter.repository.UserRepository;
@@ -60,13 +62,6 @@ public class NewsletterService {
     return user;
   }
 
-  public static String generateUniqueId(String email) {
-    UUID id = UUID.nameUUIDFromBytes(email.getBytes());
-    String str=""+id;
-    int uid=str.hashCode();
-    String filterStr=""+uid;
-    str=filterStr.replaceAll("-", "");
-    return str;
-  }
+
 
 }
