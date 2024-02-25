@@ -2,6 +2,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
+*{
+    margin:0px;
+    padding:0px;
+}
 
 body{
 font-weight: 400;
@@ -12,19 +16,44 @@ header{
     background-color: gray;
     height:50px;
     width: 100%;
+    margin-bottom: 20px;
 }
 
-.content{
-    font-family: 'Montserrat', sans-serif;
-    font-optical-sizing: auto;
-    font-style: normal;
-    width: 60%;
+article p{
+    padding-top: 5px;
+    padding-bottom: 5px;
+    text-align: left;
+}
+
+.title{
+    font-weight: bold;
+}
+
+.message {
+    font-size: 1em;
+    line-height: 1.5em;
+}
+
+#auto-generated{
+    margin-top: 30px;
+    margin-bottom: 10px;
+    text-decoration: underline;
+    text-align: justify;
+}
+
+article{
+margin-left: 20%;
+margin-right: 20%;
+
 }
 
 
 footer{
+    position: absolute;
     background-color: gray;
     height:50px;
     width: 100%;
+    bottom: 0px;
+
 }
 
