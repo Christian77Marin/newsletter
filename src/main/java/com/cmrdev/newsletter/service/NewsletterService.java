@@ -32,6 +32,19 @@ public class NewsletterService {
     return ResponseEntity.status(HttpStatus.CREATED).body("Successfully Created");
   }
 
+  public ResponseEntity<String> updateUser(String userId){
+    Optional<User> optionalUser = userRepository.findById(userId);
+
+    if(optionalUser.isEmpty()){
+      return ResponseEntity.status(HttpStatus.CONFLICT).body("The user Doesn't exists");
+    }
+
+    //TODO Fix this lines
+    user.get.setUserId(generateUniqueId(user.getEmail()));
+    userRepository.save(user);
+    return ResponseEntity.status(HttpStatus.CREATED).body("Successfully Created");
+  }
+
   public User unsubscribeUser(String email){
     Optional<User> optionalUser = Optional.ofNullable(userRepository.findByEmail(email));
 

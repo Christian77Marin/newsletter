@@ -59,8 +59,8 @@ public class NewsletterController {
   }
 
   @PatchMapping(path = "/user")
-  private ResponseEntity<User> updateUser(@RequestBody SendEmailRequest sendEmailRequest, @PathVariable String userId){
-    //emailService.sendEmail(sendEmailRequest, userId);
+  private ResponseEntity<User> updateUser(@PathVariable String userId){
+
 
     return ResponseEntity.ok().build();
   }
