@@ -11,6 +11,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -58,11 +59,14 @@ public class NewsletterController {
     return emailService.sendEmailToOwner(request);
   }
 
-  @PatchMapping(path = "/user")
-  private ResponseEntity<User> updateUser(@PathVariable String userId){
+  @PatchMapping(path = "/user/{userId}")
+  private ResponseEntity<String> updateUser(@PathVariable String userId, @RequestBody User user){
+    return service.updateUser(userId, user);
+  }
 
-
-    return ResponseEntity.ok().build();
+  @DeleteMapping(path = "/user/{userId}")
+  private ResponseEntity<String> deleteUser(@PathVariable String userId){
+    return service.deleteUser(userId);
   }
 
 

@@ -32,17 +32,23 @@ public class NewsletterService {
     return ResponseEntity.status(HttpStatus.CREATED).body("Successfully Created");
   }
 
-  public ResponseEntity<String> updateUser(String userId){
+  public ResponseEntity<String> updateUser(String userId, User user){
     Optional<User> optionalUser = userRepository.findById(userId);
 
     if(optionalUser.isEmpty()){
       return ResponseEntity.status(HttpStatus.CONFLICT).body("The user Doesn't exists");
     }
 
-    //TODO Fix this lines
-    user.get.setUserId(generateUniqueId(user.getEmail()));
+    User userdb = optionalUser.get();
+
+    user.setUserId(Objects.isNull(user.getEmail()) ? userdb.getUserId() : generateUniqueId(user.getEmail()));
+    user.setEmail(Objects.isNull(user.getEmail()) ? userdb.getEmail() : user.getEmail());
+    user.setName(Objects.isNull(user.getName()) ? userdb.getName() : user.getName());
+    user.setSurname(Objects.isNull(user.getSurname()) ? (Objects.isNull(userdb.getSurname()) ? null : userdb.getSurname()) : user.getSurname());
+    user.setPhoneNumber(Objects.isNull(user.getPhoneNumber()) ? userdb.getPhoneNumber() : user.getPhoneNumber());
+
     userRepository.save(user);
-    return ResponseEntity.status(HttpStatus.CREATED).body("Successfully Created");
+    return ResponseEntity.status(HttpStatus.OK).body("Successfully Updated");
   }
 
   public User unsubscribeUser(String email){
@@ -73,6 +79,17 @@ public class NewsletterService {
 
     userRepository.save(user);
     return user;
+  }
+
+  public ResponseEntity<String> deleteUser(String userId){
+    Optional<User> optionalUser = userRepository.findById(userId);
+
+    if(optionalUser.isEmpty()){
+      return ResponseEntity.status(HttpStatus.CONFLICT).body("The User Doesn't exists");
+    }
+
+    userRepository.deleteById(userId);
+    return ResponseEntity.status(HttpStatus.OK).body("Successfully Deleted");
   }
 
 

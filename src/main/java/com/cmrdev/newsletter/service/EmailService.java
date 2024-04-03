@@ -29,7 +29,7 @@ public class EmailService {
   private final UserRepository userRepository;
   private final EmailMapper mapper;
 
-  @Value("${OWNER_EMAIL}")
+  @Value("${SMTP_EMAIL}")
   private String ownerEmail;
 
   private static final String SPACE = " ";
